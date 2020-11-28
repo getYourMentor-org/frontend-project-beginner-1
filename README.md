@@ -24,6 +24,7 @@ https://collectui.com/designers/adriengervaix/notes-widget
 - Fork this repo.
 - Keep all your project files in this repo
 - Build the project with with vanilla (no library/framework) HTML, CSS and JavaScript.
+- Join our Telegram group for any help, discussion, questions - https://t.me/getyourmentor
 
 ## Submitting the project
 - Your project source code should be public on Github.

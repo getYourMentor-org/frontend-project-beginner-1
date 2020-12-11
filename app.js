@@ -34,14 +34,14 @@ function titleChangeHandler(idx) {
   var noteTitle = document.querySelector(".note-title");
   idx = Number(idx);
   notes[idx].title = noteTitle.value;
-  renderNotesList();
+  renderNotesList(false);
 }
 
 function descriptionChangeHandler(idx) {
   var noteDescription = document.querySelector(".note-description");
   idx = Number(idx);
   notes[idx].description = noteDescription.value;
-  renderNotesList();
+  renderNotesList(false);
 }
 
 function addNote() {
@@ -54,10 +54,19 @@ function addNote() {
   } else {
     alert("You already have an empty note!");
   }
-  renderSelectedNote(noOfNotes);
+  renderSelectedNote(noOfNotes, false);
 }
 
-function renderNotesList() {
+function deleteEmpty() {
+  notes.map((item, idx) => {
+    if (item.title === "" && item.description === "") {
+      notes.splice(idx, 1);
+    }
+  });
+}
+
+function renderNotesList(clearEmpty = true) {
+  clearEmpty && deleteEmpty();
   if (notes.length != 0) {
     var notesListInner = "";
     notes.map((item, idx) => {
@@ -80,7 +89,7 @@ function renderNotesList() {
   notesList.innerHTML = notesListInner;
 }
 
-function renderSelectedNote(idx) {
+function renderSelectedNote(idx, clearEmpty = true) {
   idx = Number(idx);
   selectedNote = idx;
 
@@ -108,7 +117,7 @@ function renderSelectedNote(idx) {
 
   // noteTitle.value = notes[idx].title;
   // noteDescription.innerHTML = notes[idx].description;
-  renderNotesList();
+  renderNotesList(clearEmpty);
 }
 
 renderSelectedNote(0);

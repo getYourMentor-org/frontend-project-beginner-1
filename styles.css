@@ -24,10 +24,12 @@ body {
   width: 100%;
   height: 100%;
   background-color: var(--blue50);
+  overflow: scroll;
 }
 
 .left {
   width: 25%;
+  min-width: 100px;
   padding: 2rem;
   background-color: var(--blue50);
   box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.05);
@@ -69,6 +71,7 @@ body {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  margin-top: 0.5rem;
 }
 
 .note-list-item-selected {
@@ -90,14 +93,27 @@ body {
   border-radius: 2rem;
   color: var(--blue500);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
   border-image: none;
   cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-save {
+.btn-delete {
   margin-left: auto;
+  border: 2px solid red;
+  color: red;
   width: 10rem;
+}
+
+.btn-icon {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 0.5rem;
 }
 
 .right {

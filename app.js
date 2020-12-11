@@ -5,16 +5,18 @@ var noteItem = document.querySelector(".note-item");
 var notenote = document.querySelector(".note-note");
 
 var selectedNote = 0;
-var notes = [
-  {
-    title: `Read EJS`,
-    note: `Process to follow: Process to follow: Process to follow:`,
-  },
-  {
-    title: `Learn Kalank on Keyboard`,
-    note: `Practice the last part to perfection and then it'll be good to record`,
-  },
-];
+var notesObj = localStorage.getItem(notes);
+
+if (notesObj == null) {
+  var notes = [
+    {
+      title: `Sample Note`,
+      note: `Hey, Welcome to NoteHD by Hetav Desai. This is a sample note, please feel free to edit this note to get started!`,
+    },
+  ];
+} else {
+  notes = JSON.parse(notesObj);
+}
 
 function getNotesCount() {
   return Number(notes.length);
@@ -57,6 +59,8 @@ function addNote() {
   renderSelectedNote(noOfNotes, false);
 }
 
+function deleteNote() {}
+
 function deleteEmpty() {
   notes.map((item, idx) => {
     if (item.title === "" && item.note === "") {
@@ -87,6 +91,7 @@ function renderNotesList(clearEmpty = true) {
     var notesListInner = `No notes to display`;
   }
   notesList.innerHTML = notesListInner;
+  localStorage.setItem("notes", JSON.stringify(notes));
 }
 
 function renderSelectedNote(idx, clearEmpty = true) {
@@ -97,6 +102,10 @@ function renderSelectedNote(idx, clearEmpty = true) {
     notes.splice(-1, 1);
   }
   var noteItemInner = `
+  <button id=${idx} class="btn-secondary btn-delete" onclick="deleteNote(this.id)">
+          <img src="/images/trash.svg" class="btn-icon" />
+          <p>Delete</p>
+        </button>
   <input
     id=${idx}
     type="text"

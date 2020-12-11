@@ -46,16 +46,22 @@ body {
 .note-list-item,
 .note-list-item-selected {
   padding: 1rem;
+  margin: 0 -0.8rem;
 }
 
-.note-list-item .title {
+.note-list-item-title {
   font-size: 1.2rem;
   font-weight: bold;
 }
 
-.note-list-item .description {
+.note-list-item-description {
   font-size: 1rem;
   color: #303030;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
 }
 
 .note-list-item-selected {
@@ -65,7 +71,8 @@ body {
 }
 
 .btn-secondary {
-  padding: 1rem 3rem;
+  padding: 1rem;
+  width: 100%;
   background-color: transparent;
   border: 2px solid var(--blue400);
   box-shadow: none;
@@ -78,6 +85,7 @@ body {
 
 .btn-save {
   margin-left: auto;
+  width: 10rem;
 }
 
 .right {
@@ -93,22 +101,27 @@ body {
   height: 100%;
 }
 
-input {
+input,
+textarea {
   background-color: transparent;
   border: none;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   outline: none;
 }
 
-.note-item .title {
+.note-title {
   font-weight: bold;
   font-size: 2rem;
   margin: 2rem 0;
 }
 
-.note-item .description {
+.note-description {
+  font-family: "Open Sans", sans-serif;
+  height: 100%;
+  resize: none;
   font-size: 1.2rem;
   color: #303030;
   line-height: 1.5rem;

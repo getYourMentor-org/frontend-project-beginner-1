@@ -47,6 +47,7 @@ body {
 .note-list-item-selected {
   padding: 1rem;
   margin: 0 -0.8rem;
+  cursor: pointer;
 }
 
 .note-list-item-title {
@@ -68,6 +69,10 @@ body {
   background-color: var(--blue500);
   color: white;
   border-radius: 1rem;
+}
+
+.note-list-item-selected .note-list-item-description {
+  color: white;
 }
 
 .btn-secondary {

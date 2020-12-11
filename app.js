@@ -16,8 +16,21 @@ var notes = [
   },
 ];
 
+function getNotesCount() {
+  return Number(notes.length);
+}
+
+function isLastEmpty() {
+  if (
+    notes[getNotesCount() - 1].title === "" &&
+    notes[getNotesCount() - 1].description === ""
+  ) {
+    return true;
+  }
+  return false;
+}
+
 function titleChangeHandler(idx) {
-  console.log("called");
   var noteTitle = document.querySelector(".note-title");
   idx = Number(idx);
   notes[idx].title = noteTitle.value;
@@ -31,6 +44,19 @@ function descriptionChangeHandler(idx) {
   renderNotesList();
 }
 
+function addNote() {
+  var noOfNotes = notes.length;
+  if (!isLastEmpty()) {
+    notes.push({
+      title: "",
+      description: "",
+    });
+  } else {
+    alert("You already have an empty note!");
+  }
+  renderSelectedNote(noOfNotes);
+}
+
 function renderNotesList() {
   if (notes.length != 0) {
     var notesListInner = "";
@@ -39,8 +65,12 @@ function renderNotesList() {
       <div id=${idx} class="note-list-item${
         selectedNote === idx ? "-selected" : ""
       }" onClick="renderSelectedNote(this.id)">
-          <h3 class="note-list-item-title">${item.title}</h3>
-          <p class="note-list-item-description">${item.description}</p>
+          <h3 class="note-list-item-title">${
+            item.title === "" ? "Title" : item.title
+          }</h3>
+          <p class="note-list-item-description">${
+            item.description === "" ? "Description" : item.description
+          }</p>
       </div>
       `;
     });
@@ -54,6 +84,9 @@ function renderSelectedNote(idx) {
   idx = Number(idx);
   selectedNote = idx;
 
+  if (idx !== notes.length - 1 && isLastEmpty()) {
+    notes.splice(-1, 1);
+  }
   var noteItemInner = `
   <input
     id=${idx}

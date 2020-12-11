@@ -29,7 +29,8 @@ body {
 .left {
   width: 25%;
   padding: 2rem;
-  background-color: var(--blue100);
+  background-color: var(--blue50);
+  box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.05);
 }
 
 .notes-list {
@@ -46,7 +47,7 @@ body {
 .note-list-item,
 .note-list-item-selected {
   padding: 1rem;
-  margin: 0 -0.8rem;
+  margin: 0.5rem -0.8rem;
   cursor: pointer;
 }
 
@@ -91,6 +92,7 @@ body {
   font-size: 1rem;
   font-weight: 500;
   border-image: none;
+  cursor: pointer;
 }
 
 .btn-save {
@@ -134,7 +136,7 @@ textarea:focus {
   resize: none;
   font-size: 1.2rem;
   color: #303030;
-  line-height: 1.5rem;
+  line-height: 2rem;
 }
 
 .small-text {

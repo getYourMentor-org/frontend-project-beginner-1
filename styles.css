@@ -61,7 +61,7 @@ body {
   -webkit-box-orient: vertical;
 }
 
-.note-list-item-description {
+.note-list-item-note {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.7);
   overflow: hidden;
@@ -77,7 +77,7 @@ body {
   border-radius: 1rem;
 }
 
-.note-list-item-selected .note-list-item-description {
+.note-list-item-selected .note-list-item-note {
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -130,7 +130,7 @@ textarea:focus {
   margin: 2rem 0;
 }
 
-.note-description {
+.note-note {
   font-family: "Open Sans", sans-serif;
   height: 100%;
   resize: none;

@@ -1,18 +1,18 @@
 var notesList = document.querySelector(".notes-list");
 var noteTitle = document.querySelector(".note-title");
-var noteDescription = document.querySelector(".note-description");
+var notenote = document.querySelector(".note-note");
 var noteItem = document.querySelector(".note-item");
-var noteDescription = document.querySelector(".note-description");
+var notenote = document.querySelector(".note-note");
 
 var selectedNote = 0;
 var notes = [
   {
     title: `Read EJS`,
-    description: `Process to follow: Process to follow: Process to follow:`,
+    note: `Process to follow: Process to follow: Process to follow:`,
   },
   {
     title: `Learn Kalank on Keyboard`,
-    description: `Practice the last part to perfection and then it'll be good to record`,
+    note: `Practice the last part to perfection and then it'll be good to record`,
   },
 ];
 
@@ -23,7 +23,7 @@ function getNotesCount() {
 function isLastEmpty() {
   if (
     notes[getNotesCount() - 1].title === "" &&
-    notes[getNotesCount() - 1].description === ""
+    notes[getNotesCount() - 1].note === ""
   ) {
     return true;
   }
@@ -37,10 +37,10 @@ function titleChangeHandler(idx) {
   renderNotesList(false);
 }
 
-function descriptionChangeHandler(idx) {
-  var noteDescription = document.querySelector(".note-description");
+function noteChangeHandler(idx) {
+  var notenote = document.querySelector(".note-note");
   idx = Number(idx);
-  notes[idx].description = noteDescription.value;
+  notes[idx].note = notenote.value;
   renderNotesList(false);
 }
 
@@ -49,7 +49,7 @@ function addNote() {
   if (!isLastEmpty()) {
     notes.push({
       title: "",
-      description: "",
+      note: "",
     });
   } else {
     alert("You already have an empty note!");
@@ -59,7 +59,7 @@ function addNote() {
 
 function deleteEmpty() {
   notes.map((item, idx) => {
-    if (item.title === "" && item.description === "") {
+    if (item.title === "" && item.note === "") {
       notes.splice(idx, 1);
     }
   });
@@ -75,10 +75,10 @@ function renderNotesList(clearEmpty = true) {
         selectedNote === idx ? "-selected" : ""
       }" onClick="renderSelectedNote(this.id)">
           <h3 class="note-list-item-title">${
-            item.title === "" ? "Title" : item.title
+            item.title === "" ? "Untitled" : item.title
           }</h3>
-          <p class="note-list-item-description">${
-            item.description === "" ? "Description" : item.description
+          <p class="note-list-item-note">${
+            item.note === "" ? "Note" : item.note
           }</p>
       </div>
       `;
@@ -100,23 +100,23 @@ function renderSelectedNote(idx, clearEmpty = true) {
   <input
     id=${idx}
     type="text"
-    placeholder="Title"
+    placeholder="Untitled"
     value="${notes[idx].title}"
     class="note-title"
     onInput="titleChangeHandler(this.id)"/>
   <textarea
     id=${idx}
     type="text"
-    placeholder="Note Description"
-    class="note-description"
-    onInput="descriptionChangeHandler(this.id)"
-  >${notes[idx].description}</textarea>
+    placeholder="Note"
+    class="note-note"
+    onInput="noteChangeHandler(this.id)"
+  >${notes[idx].note}</textarea>
   `;
 
   noteItem.innerHTML = noteItemInner;
 
   // noteTitle.value = notes[idx].title;
-  // noteDescription.innerHTML = notes[idx].description;
+  // notenote.innerHTML = notes[idx].note;
   renderNotesList(clearEmpty);
 }
 

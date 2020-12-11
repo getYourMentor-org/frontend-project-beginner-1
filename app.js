@@ -2,6 +2,7 @@ var notesList = document.querySelector(".notes-list");
 var noteTitle = document.querySelector(".note-title");
 var noteDescription = document.querySelector(".note-description");
 var noteItem = document.querySelector(".note-item");
+var noteDescription = document.querySelector(".note-description");
 
 var selectedNote = 0;
 var notes = [
@@ -14,6 +15,21 @@ var notes = [
     description: `Practice the last part to perfection and then it'll be good to record`,
   },
 ];
+
+function titleChangeHandler(idx) {
+  console.log("called");
+  var noteTitle = document.querySelector(".note-title");
+  idx = Number(idx);
+  notes[idx].title = noteTitle.value;
+  renderNotesList();
+}
+
+function descriptionChangeHandler(idx) {
+  var noteDescription = document.querySelector(".note-description");
+  idx = Number(idx);
+  notes[idx].description = noteDescription.value;
+  renderNotesList();
+}
 
 function renderNotesList() {
   if (notes.length != 0) {
@@ -44,12 +60,14 @@ function renderSelectedNote(idx) {
     type="text"
     placeholder="Title"
     value="${notes[idx].title}"
-    class="note-title"/>
+    class="note-title"
+    onInput="titleChangeHandler(this.id)"/>
   <textarea
     id=${idx}
     type="text"
     placeholder="Note Description"
     class="note-description"
+    onInput="descriptionChangeHandler(this.id)"
   >${notes[idx].description}</textarea>
   `;
 
@@ -59,4 +77,5 @@ function renderSelectedNote(idx) {
   // noteDescription.innerHTML = notes[idx].description;
   renderNotesList();
 }
+
 renderSelectedNote(0);

@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+}
+
+:root {
+  --blue50: #eff6ff;
+  --blue100: #dbeafe;
+  --blue400: #60a5fa;
+  --blue500: #3b82f6;
+  --blue600: #2563eb;
+  --blue900: #1e3a8a;
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue50);
+}
+
+.left {
+  width: 20%;
+  padding: 2rem;
+  background-color: var(--blue100);
+}
+
+.notes-list {
+  margin: 2rem 0;
+}
+
+.notes-list-heading {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.note-list-item,
+.note-list-item-selected {
+  padding: 1rem;
+}
+
+.note-list-item .title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.note-list-item .description {
+  font-size: 1rem;
+  color: #303030;
+}
+
+.note-list-item-selected {
+  background-color: var(--blue500);
+  color: white;
+  border-radius: 1rem;
+}
+
+.btn-secondary {
+  padding: 1rem 3rem;
+  background-color: transparent;
+  border: 2px solid var(--blue400);
+  box-shadow: none;
+  border-radius: 2rem;
+  color: var(--blue500);
+  font-size: 1rem;
+  font-weight: 500;
+  border-image: none;
+}
+
+.btn-save {
+  margin-left: auto;
+}
+
+.right {
+  padding: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+.note-item .title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
+.note-item .description {
+  font-size: 1.2rem;
+  color: #303030;
+  line-height: 1.5rem;
+}
+
+.small-text {
+  margin: auto 0 0 auto;
+  color: #303030;
+}

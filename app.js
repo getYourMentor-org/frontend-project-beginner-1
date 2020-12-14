@@ -10,7 +10,6 @@ var notes = [];
 
 function initializeNotes() {
   var notesArr = localStorage.getItem(["notes"]);
-  // console.log(JSON.parse(notesArr).length);
   if (JSON.parse(notesArr) == null || JSON.parse(notesArr).length === 0) {
     notes = [
       {
@@ -85,8 +84,7 @@ function deleteEmpty() {
   });
 }
 
-function renderNotesList(clearEmpty = true) {
-  clearEmpty && deleteEmpty();
+function renderNotesList() {
   if (notes.length != 0) {
     var notesListInner = "";
     notes.map((item, idx) => {
@@ -113,6 +111,8 @@ function renderNotesList(clearEmpty = true) {
 function renderSelectedNote(idx, clearEmpty = true) {
   idx = Number(idx);
   selectedNote = idx;
+
+  clearEmpty && deleteEmpty();
 
   var noteItemInner;
   if (notes.length != 0) {
@@ -147,7 +147,7 @@ function renderSelectedNote(idx, clearEmpty = true) {
   }
   noteItem.innerHTML = noteItemInner;
 
-  renderNotesList(clearEmpty);
+  renderNotesList();
 }
 
 initializeNotes();

@@ -27,6 +27,31 @@ body {
   overflow: scroll;
 }
 
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: var(--blue600);
+}
+
+.empty-state > img {
+  width: 12rem;
+  height: 12rem;
+  opacity: 0.1;
+}
+
+.empty-state > h2 {
+  margin: 3rem 0 0.5rem 0;
+  font-size: 2rem;
+  opacity: 0.2;
+}
+
+.empty-state > p {
+  opacity: 0.3;
+}
+
 .left {
   width: 25%;
   min-width: 100px;

@@ -3,6 +3,7 @@ var noteTitle = document.querySelector(".note-title");
 var notenote = document.querySelector(".note-note");
 var noteItem = document.querySelector(".note-item");
 var notenote = document.querySelector(".note-note");
+var emptyState = document.querySelector(".empty-state");
 
 var selectedNote = 0;
 var notes = [];
@@ -12,8 +13,8 @@ function initializeNotes() {
   if (JSON.parse(notesArr).length === 0) {
     notes = [
       {
-        title: `Sample Note`,
-        note: `Hey, Welcome to NotesHD by Hetav Desai. This is a sample note, please feel free to edit this note to get started!`,
+        title: `Welcome to NotesHD!`,
+        note: `This is a sample note, please feel free to edit or delete this note and get started with creating your own notes!`,
       },
     ];
   } else {
@@ -112,7 +113,7 @@ function renderSelectedNote(idx, clearEmpty = true) {
   idx = Number(idx);
   selectedNote = idx;
 
-  var noteItemInner = ``;
+  var noteItemInner;
   if (notes.length != 0) {
     noteItemInner = `
   <button id=${idx} class="btn-secondary btn-delete" onclick="deleteNote(this.id)">
@@ -134,8 +135,17 @@ function renderSelectedNote(idx, clearEmpty = true) {
     onInput="noteChangeHandler(this.id)"
   >${notes[idx].note}</textarea>
   `;
+  } else {
+    noteItemInner = `
+    <div class="empty-state">
+              <img src="images/file.svg" class="image" />
+              <h2>No Notes Created</h2>
+              <p>Quickly jot that thought down, before it's gone!</p>
+            </div>
+    `;
   }
   noteItem.innerHTML = noteItemInner;
+
   renderNotesList(clearEmpty);
 }
 

@@ -8,12 +8,28 @@ var emptyState = document.querySelector(".empty-state");
 var selectedNote = 0;
 var notes = [];
 
+const toggleSwitch = document.querySelector(
+  '.theme-switch input[type="checkbox"]'
+);
+
+function switchTheme(e) {
+  if (e.target.checked) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark"); //add this
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light"); //add this
+  }
+}
+
+toggleSwitch.addEventListener("change", switchTheme, false);
+
 function initializeNotes() {
   var notesArr = localStorage.getItem(["notes"]);
   if (JSON.parse(notesArr) == null || JSON.parse(notesArr).length === 0) {
     notes = [
       {
-        title: `Welcome to NotesHD!`,
+        title: "Welcome to NotesHD!",
         note: `This is a sample note, please feel free to edit or delete this note and get started with creating your own notes!`,
       },
     ];
@@ -117,17 +133,16 @@ function renderSelectedNote(idx, clearEmpty = true) {
   var noteItemInner;
   if (notes.length != 0) {
     noteItemInner = `
-  <button id=${idx} class="btn-secondary btn-delete" onclick="deleteNote(this.id)">
+  <button id=${idx} class="btn delete" onclick="deleteNote(this.id)">
           <img src="/images/trash.svg" class="btn-icon" />
           <p>Delete</p>
         </button>
-  <input
+  <textarea
     id=${idx}
     type="text"
     placeholder="Untitled"
-    value="${notes[idx].title}"
     class="note-title"
-    onInput="titleChangeHandler(this.id)"/>
+    onInput="titleChangeHandler(this.id)">${notes[idx].title}</textarea>
   <textarea
     id=${idx}
     type="text"

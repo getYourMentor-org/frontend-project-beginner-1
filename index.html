@@ -9,7 +9,15 @@
   <body>
     <div class="container">
       <section class="left">
-        <h2 class="notes-list-heading">Notes HD</h2>
+        <div class="header">
+          <h2 class="notes-list-heading">Notes HD</h2>
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+              <input type="checkbox" id="checkbox" />
+              <div class="slider round"></div>
+            </label>
+          </div>
+        </div>
         <div class="notes-list">
           <!-- <div class="note-list-item">
             <h3 class="title">Title</h3>
@@ -20,7 +28,7 @@
             <p class="note-list-item-note">note</p>
           </div> -->
         </div>
-        <button class="btn-secondary" onclick="addNote()">
+        <button class="btn add" onclick="addNote()">
           <img src="/images/plus.svg" class="btn-icon" />
           <p>New Note</p>
         </button>

@@ -10,7 +10,8 @@ var notes = [];
 
 function initializeNotes() {
   var notesArr = localStorage.getItem(["notes"]);
-  if (JSON.parse(notesArr).length === 0) {
+  // console.log(JSON.parse(notesArr).length);
+  if (JSON.parse(notesArr) == null || JSON.parse(notesArr).length === 0) {
     notes = [
       {
         title: `Welcome to NotesHD!`,

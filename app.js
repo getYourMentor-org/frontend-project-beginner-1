@@ -8,15 +8,12 @@ var selectedNote = 0;
 var notes = [];
 
 function initializeNotes() {
-  console.log("get", notes);
   var notesArr = localStorage.getItem(["notes"]);
-  console.log(JSON.parse(notesArr));
-  if (!notesArr) {
-    console.log("fetched empty, initialized");
+  if (JSON.parse(notesArr).length === 0) {
     notes = [
       {
         title: `Sample Note`,
-        note: `Hey, Welcome to NoteHD by Hetav Desai. This is a sample note, please feel free to edit this note to get started!`,
+        note: `Hey, Welcome to NotesHD by Hetav Desai. This is a sample note, please feel free to edit this note to get started!`,
       },
     ];
   } else {
@@ -54,18 +51,29 @@ function noteChangeHandler(idx) {
 
 function addNote() {
   var noOfNotes = notes.length;
-  if (!isLastEmpty()) {
+  if (noOfNotes != 0) {
+    if (!isLastEmpty()) {
+      notes.push({
+        title: "",
+        note: "",
+      });
+    } else {
+      alert("You already have an empty note!");
+    }
+  } else {
     notes.push({
       title: "",
       note: "",
     });
-  } else {
-    alert("You already have an empty note!");
   }
   renderSelectedNote(noOfNotes, false);
 }
 
-function deleteNote() {}
+function deleteNote(idx) {
+  idx = Number(idx);
+  notes.splice(idx, 1);
+  renderSelectedNote(0);
+}
 
 function deleteEmpty() {
   notes.map((item, idx) => {
@@ -104,10 +112,9 @@ function renderSelectedNote(idx, clearEmpty = true) {
   idx = Number(idx);
   selectedNote = idx;
 
-  if (idx !== notes.length - 1 && isLastEmpty()) {
-    notes.splice(-1, 1);
-  }
-  var noteItemInner = `
+  var noteItemInner = ``;
+  if (notes.length != 0) {
+    noteItemInner = `
   <button id=${idx} class="btn-secondary btn-delete" onclick="deleteNote(this.id)">
           <img src="/images/trash.svg" class="btn-icon" />
           <p>Delete</p>
@@ -127,11 +134,8 @@ function renderSelectedNote(idx, clearEmpty = true) {
     onInput="noteChangeHandler(this.id)"
   >${notes[idx].note}</textarea>
   `;
-
+  }
   noteItem.innerHTML = noteItemInner;
-
-  // noteTitle.value = notes[idx].title;
-  // notenote.innerHTML = notes[idx].note;
   renderNotesList(clearEmpty);
 }
 

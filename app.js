@@ -5,17 +5,23 @@ var noteItem = document.querySelector(".note-item");
 var notenote = document.querySelector(".note-note");
 
 var selectedNote = 0;
-var notesObj = localStorage.getItem(notes);
+var notes = [];
 
-if (notesObj == null) {
-  var notes = [
-    {
-      title: `Sample Note`,
-      note: `Hey, Welcome to NoteHD by Hetav Desai. This is a sample note, please feel free to edit this note to get started!`,
-    },
-  ];
-} else {
-  notes = JSON.parse(notesObj);
+function initializeNotes() {
+  console.log("get", notes);
+  var notesArr = localStorage.getItem(["notes"]);
+  console.log(JSON.parse(notesArr));
+  if (!notesArr) {
+    console.log("fetched empty, initialized");
+    notes = [
+      {
+        title: `Sample Note`,
+        note: `Hey, Welcome to NoteHD by Hetav Desai. This is a sample note, please feel free to edit this note to get started!`,
+      },
+    ];
+  } else {
+    notes = JSON.parse(notesArr);
+  }
 }
 
 function getNotesCount() {
@@ -91,7 +97,7 @@ function renderNotesList(clearEmpty = true) {
     var notesListInner = `No notes to display`;
   }
   notesList.innerHTML = notesListInner;
-  localStorage.setItem("notes", JSON.stringify(notes));
+  localStorage.setItem(["notes"], JSON.stringify(notes));
 }
 
 function renderSelectedNote(idx, clearEmpty = true) {
@@ -129,4 +135,5 @@ function renderSelectedNote(idx, clearEmpty = true) {
   renderNotesList(clearEmpty);
 }
 
+initializeNotes();
 renderSelectedNote(0);

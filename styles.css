@@ -67,7 +67,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   /* max-width: 25%; */
 }
@@ -135,7 +135,6 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
   height: 100%;
-  color: var(--blue600);
 }
 
 .empty-state > img {
@@ -148,10 +147,12 @@ input:checked + .slider:before {
   margin: 3rem 0 0.5rem 0;
   font-size: 2rem;
   opacity: 0.2;
+  color: var(--secondary-text);
 }
 
 .empty-state > p {
   opacity: 0.3;
+  color: var(--secondary-text);
 }
 
 .left {
@@ -164,8 +165,8 @@ input:checked + .slider:before {
 }
 
 .notes-list {
-  margin: 2rem 0;
-  color: var(--primary-text);
+  margin: 2rem auto;
+  color: var(--secondary-text);
 }
 
 .notes-list-heading {

@@ -8,18 +8,20 @@ var emptyState = document.querySelector(".empty-state");
 var selectedNote = 0;
 var notes = [];
 
-const toggleSwitch = document.querySelector(
-  '.theme-switch input[type="checkbox"]'
-);
+toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
 
 function switchTheme(e) {
   if (e.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark"); //add this
+    localStorage.setItem("theme", "dark");
   } else {
     document.documentElement.setAttribute("data-theme", "light");
-    localStorage.setItem("theme", "light"); //add this
+    localStorage.setItem("theme", "light");
   }
+}
+
+if (currentTheme) {
+  toggleSwitch.checked = true;
 }
 
 toggleSwitch.addEventListener("change", switchTheme, false);
@@ -55,7 +57,10 @@ function isLastEmpty() {
 function titleChangeHandler(idx) {
   var noteTitle = document.querySelector(".note-title");
   idx = Number(idx);
-  notes[idx].title = noteTitle.value;
+  notes[idx].title = noteTitle.innerHTML;
+  // if (noteTitle.innerHTML === "") {
+  //   noteTitle.innerHTML = "Untitled";
+  // }
   renderNotesList(false);
 }
 
@@ -137,12 +142,12 @@ function renderSelectedNote(idx, clearEmpty = true) {
           <img src="/images/trash.svg" class="btn-icon" />
           <p>Delete</p>
         </button>
-  <textarea
+  <div contenteditable="true"
     id=${idx}
     type="text"
     placeholder="Untitled"
-    class="note-title"
-    onInput="titleChangeHandler(this.id)">${notes[idx].title}</textarea>
+    class="note-title div-edit"
+    onInput="titleChangeHandler(this.id)">${notes[idx].title}</div>
   <textarea
     id=${idx}
     type="text"

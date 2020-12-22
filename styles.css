@@ -5,15 +5,15 @@
 }
 
 :root {
-  height: 100%;
+  height: 100vh;
   --primary-text: #000;
   --secondary-text: #666;
   --primary-bg: #fff;
   --secondary-bg: #f7f9fa;
   --tertiary-bg: #e0f3ff;
   --hover-bg: #e7f5fd;
-  --accent: #ff1f13;
-  --button: #39a2f2;
+  --accent-color: #ff1f13;
+  --button-color: #39a2f2;
 }
 
 [data-theme="dark"] {
@@ -23,8 +23,8 @@
   --secondary-bg: #253341;
   --tertiary-bg: #172e3f;
   --hover-bg: #172e3f;
-  --accent: #ff1f13;
-  --button: #39a2f2;
+  --accent-color: #ff1f13;
+  --button-color: #39a2f2;
 }
 
 body {
@@ -67,9 +67,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
-  /* max-width: 25%; */
 }
 
 .theme-switch-wrapper {
@@ -102,7 +101,7 @@ body {
 }
 
 .slider:before {
-  background-color: var(--button);
+  background-color: var(--button-color);
   bottom: 4px;
   content: "";
   height: 26px;
@@ -175,6 +174,7 @@ input:checked + .slider:before {
   letter-spacing: 0.1rem;
   color: var(--primary-text);
   text-align: center;
+  margin-right: auto;
 }
 
 .note-list-item,
@@ -189,7 +189,7 @@ input:checked + .slider:before {
 
 .note-list-item:hover {
   background-color: var(--hover-bg);
-  color: var(--button);
+  color: var(--button-color);
 }
 
 .note-list-item-title {
@@ -215,7 +215,7 @@ input:checked + .slider:before {
 
 .note-list-item-selected {
   background-color: var(--tertiary-bg);
-  color: var(--button);
+  color: var(--button-color);
 }
 
 .note-list-item-selected .note-list-item-note {
@@ -237,23 +237,23 @@ input:checked + .slider:before {
   align-items: center;
 }
 
-.add {
-  border: 2px solid var(--button);
+.add-btn {
+  border: 2px solid var(--button-color);
   color: white;
-  background: var(--button);
+  background: var(--button-color);
 }
 
 button:focus {
   outline: none;
 }
 
-.delete {
+.delete-btn {
   padding: 1rem 0;
   background-color: transparent;
   margin-left: auto;
   margin-top: 0.25rem;
-  border: 2px solid var(--accent);
-  color: var(--accent);
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
   min-width: 10rem;
   max-width: 10rem;
 }
@@ -295,7 +295,7 @@ textarea:focus {
   font-weight: bold;
   font-size: 2rem;
   margin: 2rem 0;
-  color: var(--button);
+  color: var(--button-color);
   resize: none;
   height: auto;
   text-overflow: ellipsis;
@@ -327,7 +327,7 @@ textarea:focus {
     display: none;
   }
   .btn,
-  .delete {
+  .delete-btn {
     width: auto;
     min-width: 0;
     padding: 1rem;
@@ -337,7 +337,7 @@ textarea:focus {
     margin: 0;
   }
 
-  .add {
+  .add-btn {
     margin: auto;
   }
 }

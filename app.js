@@ -1,14 +1,11 @@
-var notesList = document.querySelector(".notes-list");
-var noteTitle = document.querySelector(".note-title");
-var notenote = document.querySelector(".note-note");
-var noteItem = document.querySelector(".note-item");
-var notenote = document.querySelector(".note-note");
-var emptyState = document.querySelector(".empty-state");
+var notesList = document.querySelector(".js-notes-list");
+var noteItem = document.querySelector(".js-note-item");
+var emptyState = document.querySelector(".js-empty-state");
 
-var selectedNote = 0;
+var selectedNoteIndex = 0;
 var notes = [];
 
-toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+toggleSwitch = document.querySelector(".theme-switch .toggle-theme-checkbox");
 
 function switchTheme(e) {
   if (e.target.checked) {
@@ -27,8 +24,9 @@ if (currentTheme) {
 toggleSwitch.addEventListener("change", switchTheme, false);
 
 function initializeNotes() {
-  var notesArr = localStorage.getItem(["notes"]);
-  if (JSON.parse(notesArr) == null || JSON.parse(notesArr).length === 0) {
+  var notesArr = localStorage.getItem("notes");
+  notes = JSON.parse(notesArr);
+  if (notes === null || notes.length === 0) {
     notes = [
       {
         title: "Welcome to NotesHD!",
@@ -41,10 +39,10 @@ function initializeNotes() {
 }
 
 function getNotesCount() {
-  return Number(notes.length);
+  return notes.length;
 }
 
-function isLastEmpty() {
+function isLastNoteEmpty() {
   if (
     notes[getNotesCount() - 1].title === "" &&
     notes[getNotesCount() - 1].note === ""
@@ -54,27 +52,25 @@ function isLastEmpty() {
   return false;
 }
 
-function titleChangeHandler(idx) {
+function titleChangeHandler(currentIndex) {
   var noteTitle = document.querySelector(".note-title");
-  idx = Number(idx);
-  notes[idx].title = noteTitle.innerHTML;
-  // if (noteTitle.innerHTML === "") {
-  //   noteTitle.innerHTML = "Untitled";
-  // }
+  currentIndex = Number(currentIndex);
+  notes[currentIndex].title = noteTitle.innerHTML;
+
   renderNotesList(false);
 }
 
-function noteChangeHandler(idx) {
-  var notenote = document.querySelector(".note-note");
-  idx = Number(idx);
-  notes[idx].note = notenote.value;
+function noteChangeHandler(currentIndex) {
+  var notenote = document.querySelector(".js-note-note");
+  currentIndex = Number(currentIndex);
+  notes[currentIndex].note = notenote.value;
   renderNotesList(false);
 }
 
 function addNote() {
   var noOfNotes = notes.length;
-  if (noOfNotes != 0) {
-    if (!isLastEmpty()) {
+  if (noOfNotes) {
+    if (!isLastNoteEmpty()) {
       notes.push({
         title: "",
         note: "",
@@ -88,19 +84,19 @@ function addNote() {
       note: "",
     });
   }
-  renderSelectedNote(noOfNotes, false);
+  renderNoteWithIndex(noOfNotes, false);
 }
 
-function deleteNote(idx) {
-  idx = Number(idx);
-  notes.splice(idx, 1);
-  renderSelectedNote(0);
+function deleteNote(currentIndex) {
+  currentIndex = Number(currentIndex);
+  notes.splice(currentIndex, 1);
+  renderNoteWithIndex(0);
 }
 
 function deleteEmpty() {
-  notes.map((item, idx) => {
+  notes.map((item, currentIndex) => {
     if (item.title === "" && item.note === "") {
-      notes.splice(idx, 1);
+      notes.splice(currentIndex, 1);
     }
   });
 }
@@ -108,11 +104,11 @@ function deleteEmpty() {
 function renderNotesList() {
   if (notes.length != 0) {
     var notesListInner = "";
-    notes.map((item, idx) => {
+    notes.map((item, currentIndex) => {
       notesListInner += `
-      <div id=${idx} class="note-list-item${
-        selectedNote === idx ? "-selected" : ""
-      }" onClick="renderSelectedNote(this.id)">
+      <div id=${currentIndex} class="note-list-item${
+        selectedNoteIndex === currentIndex ? "-selected" : ""
+      }" onClick="renderNoteWithIndex(this.id)">
           <h3 class="note-list-item-title">${
             item.title === "" ? "Untitled" : item.title
           }</h3>
@@ -126,39 +122,39 @@ function renderNotesList() {
     var notesListInner = `No notes to display`;
   }
   notesList.innerHTML = notesListInner;
-  localStorage.setItem(["notes"], JSON.stringify(notes));
+  localStorage.setItem("notes", JSON.stringify(notes));
 }
 
-function renderSelectedNote(idx, clearEmpty = true) {
-  idx = Number(idx);
-  selectedNote = idx;
+function renderNoteWithIndex(currentIndex, shouldClearEmpty = true) {
+  currentIndex = Number(currentIndex);
+  selectedNoteIndex = currentIndex;
 
-  clearEmpty && deleteEmpty();
+  shouldClearEmpty && deleteEmpty();
 
   var noteItemInner;
   if (notes.length != 0) {
     noteItemInner = `
-  <button id=${idx} class="btn delete" onclick="deleteNote(this.id)">
-          <img src="/images/trash.svg" class="btn-icon" />
-          <p>Delete</p>
+  <button id=${currentIndex} class="btn delete-btn" onclick="deleteNote(this.id)">
+          <img src="/images/trash.svg" class="btn-icon" alt="delete current note"/>
+          <span>Delete</span>
         </button>
   <div contenteditable="true"
-    id=${idx}
+    id=${currentIndex}
     type="text"
     placeholder="Untitled"
     class="note-title div-edit"
-    onInput="titleChangeHandler(this.id)">${notes[idx].title}</div>
+    onInput="titleChangeHandler(this.id)">${notes[currentIndex].title}</div>
   <textarea
-    id=${idx}
+    id=${currentIndex}
     type="text"
     placeholder="Note"
-    class="note-note"
+    class="note-note js-note-note"
     onInput="noteChangeHandler(this.id)"
-  >${notes[idx].note}</textarea>
+  >${notes[currentIndex].note}</textarea>
   `;
   } else {
     noteItemInner = `
-    <div class="empty-state">
+    <div class="empty-state js-empty-state">
               <img src="images/file.svg" class="image" />
               <h2>No Notes Created</h2>
               <p>Quickly jot that thought down, before it's gone!</p>
@@ -171,4 +167,4 @@ function renderSelectedNote(idx, clearEmpty = true) {
 }
 
 initializeNotes();
-renderSelectedNote(0);
+renderNoteWithIndex(0);

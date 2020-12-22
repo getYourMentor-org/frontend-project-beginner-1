@@ -1,5 +1,5 @@
 var toggleSwitch = document.querySelector(
-  '.theme-switch input[type="checkbox"]'
+  ".theme-switch toggle-theme-checkbox"
 );
 
 const currentTheme = localStorage.getItem("theme")

@@ -323,7 +323,7 @@ textarea:focus {
     padding: 2rem;
   }
 
-  .btn > p {
+  .btn > span {
     display: none;
   }
   .btn,

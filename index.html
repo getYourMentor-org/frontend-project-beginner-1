@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>NotesHD | Hetav Desai</title>
+  </head>
+  <body>
+    <script src="theme.js" type="text/javascript"></script>
+    <div class="container">
+      <section class="left">
+        <div class="header">
+          <h2 class="notes-list-heading">Notes HD</h2>
+          <label class="theme-switch-wrapper">
+            <div class="theme-switch">
+              <input
+                type="checkbox"
+                class="toggle-theme-checkbox"
+                aria-label="toggle theme"
+              />
+              <div class="slider round"></div>
+            </label>
+          </div>
+        </div>
+        <div class="notes-list js-notes-list">
+          <!-- <div class="note-list-item">
+            <h3 class="title">Title</h3>
+            <p class="note">note</p>
+          </div>
+          <div class="note-list-item-selected">
+            <h3 class="note-list-item-title">Title</h3>
+            <p class="note-list-item-note">note</p>
+          </div> -->
+        </div>
+        <button class="btn add-btn" onclick="addNote()">
+          <img src="/images/plus.svg" class="btn-icon" alt="add new note" />
+          <span>New Note</span>
+        </button>
+      </section>
+      <section class="right">
+        <div class="note-item js-note-item">
+          <!-- <input type="text" placeholder="Title" class="note-title"></input> -->
+          <!-- <textarea
+            type="text"
+            placeholder="Note note"
+            class="note-note"
+          ></textarea>
+          <small class="small-text">Last modified at 06:00 p.m.</small> -->
+        </div>
+      </section>
+    </div>
+    <script src="app.js" type="text/javascript"></script>
+  </body>
+</html>

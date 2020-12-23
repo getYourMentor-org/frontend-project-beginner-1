@@ -1,7 +1,7 @@
 # GetYourMentor Frontend project - Beginner/1
 
 ## DEMO LINK
-<INSERT_DEMO_LINK_HERE>
+https://noteshd.netlify.app/
 
 ## Target
 
@@ -20,13 +20,8 @@ https://collectui.com/designers/adriengervaix/notes-widget
 - Clicking on any note in the left sidebar shows the note in the right side area.
 - Left sidebar also has a "New note" button which creates a new note with title as "Untitled Note".
 
-## Development
-- Fork this repo.
-- Keep all your project files in this repo
-- Build the project with with vanilla (no library/framework) HTML, CSS and JavaScript.
-- Join our Telegram group for any help, discussion, questions - https://t.me/getyourmentor
-
-## Submitting the project
-- Your project source code should be public on Github.
-- Host your project on [Netlify](https://netlify.com) or [Vercel](https://vercel.com). And insert your demo link in the README.md file instead of `<INSERT_DEMO_LINK_HERE>`
-- To submit your project for review, open a pull request of your repository against this repo -> https://github.com/getYourMentor-org/frontend-project-beginner-1
+## Added Specifications
+- Delete Button to delete currently open note
+- Auto delete notes with empty title and content
+- Not to allow creation of new note if last added note is empty
+- Designed empty state to display when all notes are deleted

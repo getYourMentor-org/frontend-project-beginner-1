@@ -1,0 +1,144 @@
+body{
+    color: #7069f3;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hamburger{
+    position : absolute;
+    z-index: 2;
+    right: 0;
+}
+
+.overflow-auto{
+    overflow-y: auto;
+}
+#new-note{
+    width:100%;
+    min-height: 60px;
+    border: 1px solid #484554;
+    grid-row: 2;
+}
+.create-note{
+    display: flex;
+    width:100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    color: #7069f3;
+    font-size: 2em;
+}
+.flex-btn-wrapper{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+}
+.flex-btn{
+    flex: 1;  
+    padding: 0.6em 2em;
+    color: #fff;
+    border: none;
+}
+
+#del{
+    background: #484554;
+}
+#save{
+    background: #7069f3;
+}
+#del:hover ,#save:hover{
+    opacity: 0.8;
+}
+
+#textarea-wrapper{
+    position: relative;
+}
+#textarea-content{
+    visibility: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+textarea{
+    border: none;
+    resize: none;
+    overflow: hidden;
+    position: absolute;
+    height: 100%;
+}   
+.textarea-typography{
+    line-height: 40px;
+    width:100%;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: Source Sans Pro,-apple-system,system-ui,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    padding-bottom: 4px;
+}
+[contenteditable=true]:empty:before{
+    content: attr(aria-placeholder);
+    pointer-events: none;
+    display: block; 
+  }
+li{
+    overflow-wrap: break-word;
+    min-height: 120px;
+    border: 1px solid #484554;
+    padding: 1rem;
+    position: relative;
+}
+.heading{
+    font-weight: 600;
+    color: #121;
+}
+.content{
+    display:none;
+}
+.span{
+    hyphens: auto;
+}
+.date{
+    position: absolute;
+    bottom: 0;
+    color: #121;
+    font-size: .8em;
+}
+.active{
+    background: #a9b7ee;
+    border: 3px solid #7069f3;
+}
+
+.toggle-none-sm{
+    display: none;
+}
+
+@media (min-width : 700px) { 
+    .hamburger{
+        display: none;
+    }
+
+    #main-wrapper{
+        display: grid;
+        grid-template-columns: 250px 1fr;
+    }
+    #left-sidebar{
+        border-right: 1px solid #484554;
+        display: grid;
+        grid-template-rows: 90vh 10vh;
+    }
+    .toggle-none-sm{
+        display: block;
+    }
+    .flex-btn-wrapper{
+        justify-content: flex-end;
+        width: unset;
+        position: static;
+    }
+    .flex-btn{
+        flex: unset;
+    }
+}

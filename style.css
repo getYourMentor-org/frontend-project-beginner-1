@@ -82,8 +82,11 @@ textarea{
 [contenteditable=true]:empty:before{
     content: attr(aria-placeholder);
     pointer-events: none;
-    display: block; 
+    display: block;
   }
+[contenteditable=true]{
+    height: 100%;
+}
 li{
     overflow-wrap: break-word;
     min-height: 120px;

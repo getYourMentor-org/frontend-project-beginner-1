@@ -1,11 +1,11 @@
 let hamburger = document.querySelector('.hamburger')
 
 let mainWrapper = document.querySelector('#main-wrapper')
-let leftSideBar = document.querySelector('#left-sidebar')
+let leftSideBar = document.querySelector('.left-sidebar')
 let listWrapper = document.querySelector('ul')
 let addNote = document.querySelector('#new-note')
 
-let textareaEditorWrapper = document.querySelector('#textarea-editor-wrapper')
+let textareaEditorWrapper = document.querySelector('.textarea-editor-wrapper')
 let textArea = document.querySelector('textarea')
 let textAreaContent = document.querySelector('#textarea-content')
 let editor = document.querySelector('.editor')
@@ -22,6 +22,8 @@ let addNoteClicks = 0;
 let curNode = ''
 
 let notes = []
+
+let toggleCount = 0
 
 const getTextSelection = function (editor) {
     const selection = window.getSelection();
@@ -86,10 +88,11 @@ renderNotes()
 setQuerySelectors()
 
 function toggleList(){
-    leftSideBar.classList.toggle('toggle-none-sm'); 
-    textareaEditorWrapper.classList.toggle('toggle-none-sm');
+    toggleCount++;
+    leftSideBar.setAttribute("id", toggleCount % 2 === 0 ? "toggle-none-sm" : " ");
+    textareaEditorWrapper.setAttribute("id", toggleCount % 2 === 0 ? " ":"toggle-none-sm" );
 }
-console.log(window)
+
 function updateTextDown(e){
     textAreaContent.innerText =  (e.target.value !== '' ) ? 
         e.target.value : '.'
@@ -121,6 +124,9 @@ function updateEditorDown(e){
 }
 
 function updateEditorUp(e){
+    if (e.target.innerText.includes('`')) {
+        e.target.innerHTML = e.target.innerHTML.replace('`', "<span style='color:black;'>" + '`' + "</span>");
+    }
     span.textContent = content.textContent.length > 72 ? 
     content.textContent.substr(0,71) + '...' : 
     content.textContent = e.target.innerText
@@ -133,6 +139,7 @@ function saveNote(){
     const getCurNodeDataset = curNode.dataset.num
     const isIndex = num => num.index == getCurNodeDataset 
     const indexOfCurNode = notes.findIndex(isIndex)
+    console.log(curNode.children[1].outerHTML)
     if(indexOfCurNode === -1){
         notes.push({
             index: getCurNodeDataset,
@@ -149,6 +156,7 @@ function saveNote(){
             date: `last edited ${curTime}`
         }
     }
+    console.log(notes)
     window.localStorage.setItem('notes', JSON.stringify(notes));
 }
 
@@ -210,6 +218,7 @@ function addNewNote(){
     curNode && curNode.classList.remove("active")
     setActive(addNoteClicks)
     toggleList()
+    document.querySelector('.overflow-auto').scrollTo(0,listWrapper.scrollHeight)
 }
 
 function active(e){
@@ -267,6 +276,7 @@ function renderNotes(){
     textArea.value = firstNode.children[0].innerText
     editor.innerText =  firstNode.children[1].innerText
     document.querySelector('li').classList.add("active")
+    addNoteClicks = listWrapper.children.length
 }
 
 function setQuerySelectors(){

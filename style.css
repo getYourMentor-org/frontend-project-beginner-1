@@ -21,7 +21,19 @@ h1{
 
 .overflow-auto{
     overflow-y: auto;
+    scrollbar-width: thin;      
+    scrollbar-color: #7069f3 #fff;  
 }
+.overflow-auto::-webkit-scrollbar {
+    width: 2px;               /* width of the entire scrollbar */
+  }
+.overflow-auto::-webkit-scrollbar-thumb {
+background-color: #fff;    /* color of the scroll thumb */
+}
+.overflow-auto::-webkit-scrollbar-track {
+background: #7069f3;        /* color of the tracking area */
+}
+
 #new-note{
     width:100%;
     min-height: 60px;
@@ -36,6 +48,13 @@ h1{
     color: #7069f3;
     font-size: 2em;
 }
+
+.textarea-editor-wrapper{
+    display: grid;
+    height: 100vh;
+    grid-template-rows: max-content 1fr;
+}
+
 .flex-btn-wrapper{
     position: absolute;
     bottom: 0;
@@ -89,7 +108,7 @@ textarea{
     display: block;
   }
 [contenteditable=true]{
-    height: 100%;
+    overflow-y: scroll;
 }
 li{
     overflow-wrap: break-word;
@@ -119,7 +138,7 @@ li{
     border: 3px solid #7069f3;
 }
 
-.toggle-none-sm{
+#toggle-none-sm{
     display: none;
 }
 
@@ -132,13 +151,16 @@ li{
         display: grid;
         grid-template-columns: 250px 1fr;
     }
-    #left-sidebar{
+    .left-sidebar{
         border-right: 1px solid #484554;
         display: grid;
         grid-template-rows: 5vh 85vh 10vh;
     }
-    .toggle-none-sm{
-        display: block;
+    .textarea-editor-wrapper{
+        grid-template-rows: max-content max-content 1fr;
+    }
+    #toggle-none-sm{
+        display: grid;
     }
     .flex-btn-wrapper{
         justify-content: flex-end;

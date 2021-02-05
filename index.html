@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <label for="dark">
+                <input type="checkbox" name="dark" id="dark" />
+                <span class="slider"></span>
+            </label>
+            <div class="sidebar-note">
+                <h3 class="sidebar-note-heading">Title</h3>
+                Some characters of the note which has a lot...
+            </div>
+            <button class="btn btn-new">+ New Note</button>
+        </div>
+        <div class="note">
+            <button class="btn btn-delete">Delete</button>
+        </div>
+    </div>
+    <script type="module" src="./index.js"></script>
+    <script type="module" src="./theme.js"></script>
+</body>
+
+</html>

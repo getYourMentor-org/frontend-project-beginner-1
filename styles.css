@@ -14,19 +14,10 @@
     --light-color: #6cbaf7;
 }
 
-/* Dark Theme
-    --primary-text: #fafafa;
-    --secondary-text: #8899a6;
-    --primary-bg: #15202b;
-    --secondary-bg: #253341;
-    --tertiary-bg: #172e3f; modify
-    --warning-color: #ff1f13;
-    --primary-color: #39a2f2;
- */
-
 body {
     font-family: 'Merriweather', serif;
     text-align: center;
+    margin: 0;
 }
 
 /* Buttons */
@@ -58,7 +49,10 @@ body {
     color: var(--warning-color);
     background: var(--primary-bg);
     padding: 0.8rem 2rem;
-    border: 3px solid var(--warning-color)
+    border: 3px solid var(--warning-color);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
 }
 
 .btn-delete:hover,
@@ -120,9 +114,10 @@ input:checked+.slider:before {
 /* Sidebar Note */
 
 .sidebar-note {
-    margin: auto;
+    position: relative;
+    margin: 1rem auto;
     padding: 1rem;
-    width: 34%;
+    width: 80%;
     color: var(--secondary-text);
 }
 
@@ -145,18 +140,22 @@ input:checked+.slider:before {
 .main {
     display: flex;
     width: 100%;
-    height: 500px;
-    /* update height to 100 later */
+    height: 800px;
 }
 
 .sidebar {
     width: 38%;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     height: inherit;
     background: var(--secondary-bg);
 }
 
 .note {
+    background: var(--primary-bg);
     padding: 1rem;
     height: inherit;
     flex: 1
@@ -164,19 +163,18 @@ input:checked+.slider:before {
 
 
 @media screen and (min-width: 480px) {
-    .sidebar-note {
-        width: 26%;
-    }
 
     .sidebar {
         width: 30%;
     }
+
+    .btn-delete {
+        right: 1.5rem;
+        top: 1.5rem;
+    }
 }
 
 @media screen and (min-width: 768px) {
-    .sidebar-note {
-        width: 18%;
-    }
 
     .sidebar {
         width: 25%;
@@ -184,5 +182,10 @@ input:checked+.slider:before {
 
     .btn-new {
         padding: 1rem 3rem;
+    }
+
+    .btn-delete {
+        right: 2rem;
+        top: 2rem;
     }
 }

@@ -15,14 +15,15 @@
                 <input type="checkbox" name="dark" id="dark" />
                 <span class="slider"></span>
             </label>
-            <div class="sidebar-note">
-                <h3 class="sidebar-note-heading">Title</h3>
-                Some characters of the note which has a lot...
-            </div>
-            <button class="btn btn-new">+ New Note</button>
+            <button style="margin-top: 1rem;" id="btn-new" class="btn btn-new">+ New Note</button>
         </div>
         <div class="note">
-            <button class="btn btn-delete">Delete</button>
+            <div class="absolute">
+                <button id="btn-save" class="btn btn-new btn-save">Save</button>
+                <button id="btn-delete" class="btn btn-delete">Delete</button>
+            </div>
+            <input type="text" id="heading" class="note-heading" />
+            <div class="note-content" id="content" contenteditable="true"></div>
         </div>
     </div>
     <script type="module" src="./index.js"></script>

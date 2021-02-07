@@ -14,9 +14,18 @@
     --light-color: #6cbaf7;
 }
 
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
 body {
     font-family: 'Merriweather', serif;
-    text-align: center;
     margin: 0;
 }
 
@@ -25,6 +34,7 @@ body {
     font-weight: 700;
     border-radius: 25px;
     font-family: inherit;
+    cursor: pointer;
 }
 
 .btn-new {
@@ -33,6 +43,7 @@ body {
     border: none;
     padding: 1rem 1.2rem;
     outline: none;
+    cursor: pointer;
 }
 
 .btn-new:hover,
@@ -50,9 +61,6 @@ body {
     background: var(--primary-bg);
     padding: 0.8rem 2rem;
     border: 3px solid var(--warning-color);
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
 }
 
 .btn-delete:hover,
@@ -68,6 +76,31 @@ body {
     border: 3px solid var(--warning-light);
 }
 
+.btn-save {
+    border: 3px solid var(--primary-color);
+    padding: 0.8rem 2rem;
+    color: var(--primary-color);
+    background-color: var(--primary-bg);
+}
+
+.btn-save:hover,
+.btn-save:focus {
+    border: 3px solid var(--dark-color);
+    color: white;
+}
+
+.btn-save:active {
+    border: 3px solid var(--light-color);
+    color: white;
+}
+
+.absolute {
+    position: absolute;
+    top: 0.5rem;
+    right: 0rem;
+    padding-bottom: 1rem;
+}
+
 /* Toggle */
 
 input[type="checkbox"] {
@@ -78,11 +111,12 @@ input[type="checkbox"] {
 
 label[for="dark"] {
     display: inline-block;
-    height: 33px;
+    height: 34px;
     width: 60px;
     background-color: var(--tertiary-bg);
-    border-radius: 28px;
+    border-radius: 34px;
     position: relative;
+    flex: 0 0 auto;
 }
 
 .slider {
@@ -98,8 +132,8 @@ label[for="dark"] {
 .slider:before {
     position: absolute;
     content: "";
-    height: 25px;
-    width: 25px;
+    height: 26px;
+    width: 26px;
     left: 4px;
     bottom: 4px;
     background: var(--primary-color);
@@ -115,10 +149,15 @@ input:checked+.slider:before {
 
 .sidebar-note {
     position: relative;
-    margin: 1rem auto;
+    margin: 0 auto 1rem 0;
     padding: 1rem;
     width: 80%;
     color: var(--secondary-text);
+    cursor: pointer;
+}
+
+.sidebar-note>p {
+    margin: 0;
 }
 
 .sidebar-note-heading {
@@ -139,53 +178,83 @@ input:checked+.slider:before {
 
 .main {
     display: flex;
-    width: 100%;
-    height: 800px;
+    align-items: stretch;
+    height: 100vh
 }
 
 .sidebar {
-    width: 38%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: inherit;
     background: var(--secondary-bg);
+    flex: 4;
+    overflow: auto;
 }
 
+
 .note {
+    position: relative;
     background: var(--primary-bg);
     padding: 1rem;
-    height: inherit;
-    flex: 1
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 6
+}
+
+.note-heading {
+    font-family: inherit;
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    background: var(--primary-bg);
+    margin: 3rem 2rem 0 2rem;
+    width: inherit;
+}
+
+.note-content {
+    display: flex;
+    margin: 1rem 2rem;
+    color: var(--secondary-text)
+}
+
+.note-content:focus {
+    border: none;
+    outline: none;
 }
 
 
 @media screen and (min-width: 480px) {
 
-    .sidebar {
-        width: 30%;
-    }
-
-    .btn-delete {
+    .absolute {
         right: 1.5rem;
         top: 1.5rem;
     }
+
 }
 
 @media screen and (min-width: 768px) {
-
-    .sidebar {
-        width: 25%;
-    }
-
     .btn-new {
         padding: 1rem 3rem;
     }
 
-    .btn-delete {
+    .btn-save {
+        padding: 0.8rem 2rem;
+    }
+
+    .absolute {
         right: 2rem;
         top: 2rem;
+    }
+
+    .sidebar {
+        flex: 3
+    }
+
+    .note {
+        flex: 7
     }
 }

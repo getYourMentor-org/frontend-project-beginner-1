@@ -2,57 +2,20 @@ import { darkTheme, lightTheme } from "./theme.js";
 
 // fetch from local storage and display
 // set first as active
-const notes = JSON.stringify([
-  {
-    heading: "Title1",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-  {
-    heading: "Title3",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-  {
-    heading: "Title4",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-  {
-    heading: "Title5",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-  {
-    heading: "Title6",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-  {
-    heading: "Title7",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-  {
-    heading: "Title8",
-    content:
-      "Some characters of the note which has a lot. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus optio, quod nihil repellendus iste\n        maiores repellat laudantium? Doloribus maxime odio saepe nam quasi delectus sapiente voluptate, amet,\n        ipsam consectetur quod.",
-  },
-]);
-localStorage.setItem("notes", notes);
 const storedNotes = JSON.parse(localStorage.getItem("notes"));
-let activeId = "note0";
+let activeId = "";
 const sidebar = document.querySelector(".sidebar");
 const fragment = new DocumentFragment();
 storedNotes.forEach((note, i) => {
-  const { heading, content } = note;
+  const { heading, content, id } = note;
   const sideNote = document.createElement("div");
   sideNote.classList.add("sidebar-note");
-  sideNote.id = `note${i}`;
+  sideNote.id = id;
   const sideNoteHeading = document.createElement("h3");
   sideNoteHeading.classList.add("sidebar-note-heading");
   sideNoteHeading.innerText = heading;
   if (i === 0) {
+    activeId = id;
     sideNote.classList.add("sidebar-note-active");
     sideNoteHeading.classList.add("sidebar-note-heading-active");
   }
@@ -64,8 +27,8 @@ storedNotes.forEach((note, i) => {
 });
 const newButton = document.querySelector(".btn-new");
 sidebar.insertBefore(fragment, newButton);
-const heading = document.querySelector("#heading");
-const content = document.querySelector("#content");
+const headingDiv = document.querySelector("#heading");
+const contentDiv = document.querySelector("#content");
 heading.value = storedNotes[0].heading;
 content.innerText = storedNotes[0].content;
 
@@ -93,8 +56,9 @@ for (const sidebarNote of sidebarNotes) {
       oldNote.classList.remove("sidebar-note-active");
       oldHeaading.classList.remove("sidebar-note-heading-active");
       activeId = id;
-      heading.value = storedNotes[+activeId.slice(4)].heading;
-      content.innerText = storedNotes[+activeId.slice(4)].content;
+      const { heading, content } = storedNotes.find(note => note.id === activeId);
+      headingDiv.value = heading;
+      contentDiv.innerText = content;
     }
   });
 }
@@ -103,12 +67,14 @@ for (const sidebarNote of sidebarNotes) {
 newButton.addEventListener("click", () => {
   // add to array and local storage
   // make the note active
+  // localStorage.setItem("notes", notes);
 });
 
 // delete Note
 const deleteButton = document.querySelector(".btn-delete");
 deleteButton.addEventListener("click", () => {
   // delete from array and local storage
+  // localStorage.setItem("notes", notes);
 });
 
 //save Note

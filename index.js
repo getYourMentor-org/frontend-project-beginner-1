@@ -1,39 +1,50 @@
 import { darkTheme, lightTheme } from "./theme.js"
+import { createNewSideNote, generateId, shortenContent } from "./utils.js"
 
-// fetch from local storage and display
-// set first as active
 let storedNotes = JSON.parse(localStorage.getItem("notes"))
 let activeId = ""
+
+const toggle = document.querySelector('input[type="checkbox"]')
 const sidebar = document.querySelector(".sidebar")
-const fragment = new DocumentFragment()
-storedNotes.forEach((note, i) => {
-  const { heading, content, id } = note
-  const sideNote = document.createElement("div")
-  sideNote.classList.add("sidebar-note")
-  sideNote.id = id
-  const sideNoteHeading = document.createElement("h3")
-  sideNoteHeading.classList.add("sidebar-note-heading")
-  sideNoteHeading.innerText = heading
-  if (i === 0) {
-    activeId = id
-    sideNote.classList.add("sidebar-note-active")
-    sideNoteHeading.classList.add("sidebar-note-heading-active")
-  }
-  const sideNoteContent = document.createElement("p")
-  sideNoteContent.innerText = content.slice(0, 50) + "..."
-  sideNote.appendChild(sideNoteHeading)
-  sideNote.appendChild(sideNoteContent)
-  fragment.appendChild(sideNote)
-})
-const newButton = document.querySelector(".btn-new")
-sidebar.insertBefore(fragment, newButton)
+const newButton = document.querySelector("#btn-new")
 const headingDiv = document.querySelector("#heading")
 const contentDiv = document.querySelector("#content")
-heading.value = storedNotes[0].heading
-content.innerText = storedNotes[0].content
+init()
+const sidebarNotes = document.querySelectorAll(".sidebar-note")
 
-// set Theme
-const toggle = document.querySelector('input[type="checkbox"]')
+// set active class to new note and remove from prev note in sidebar
+function makeNoteActive(id) {
+  if (activeId !== id) {
+    {
+      const sidebarNote = document.querySelector(`#${id}`)
+      const sidebarHeading = document.querySelector(`#${id} > h3`)
+      sidebarNote.classList.add("sidebar-note-active")
+      sidebarHeading.classList.add("sidebar-note-heading-active")
+      if (activeId) {
+        const oldNote = document.querySelector(`#${activeId}`)
+        const oldHeading = document.querySelector(`#${activeId} > h3`)
+        oldNote.classList.remove("sidebar-note-active")
+        oldHeading.classList.remove("sidebar-note-heading-active")
+      }
+      activeId = id
+      const { heading, content } = storedNotes.find(note => note.id === activeId)
+      headingDiv.value = heading
+      contentDiv.innerText = content
+    }
+  }
+}
+
+// initialize sidebar and set first note as active
+function init() {
+  const fragment = new DocumentFragment()
+  storedNotes.forEach((note, i) => {
+    fragment.appendChild(createNewSideNote(note))
+  })
+  sidebar.insertBefore(fragment, newButton)
+  makeNoteActive(storedNotes[0].id)
+}
+
+// change theme on toggle 
 toggle.addEventListener("change", () => {
   if (toggle.checked) {
     darkTheme()
@@ -42,54 +53,61 @@ toggle.addEventListener("change", () => {
   }
 })
 
-//set active note
-const sidebarNotes = document.querySelectorAll(".sidebar-note")
+// set note clicked on sidebar as active
 for (const sidebarNote of sidebarNotes) {
   sidebarNote.addEventListener("click", () => {
     const { id } = sidebarNote
-    if (activeId !== id) {
-      const sidebarHeading = document.querySelector(`#${id} > h3`)
-      const oldNote = document.querySelector(`#${activeId}`)
-      const oldHeaading = document.querySelector(`#${activeId} > h3`)
-      sidebarNote.classList.add("sidebar-note-active")
-      sidebarHeading.classList.add("sidebar-note-heading-active")
-      oldNote.classList.remove("sidebar-note-active")
-      oldHeaading.classList.remove("sidebar-note-heading-active")
-      activeId = id
-      const { heading, content } = storedNotes.find(note => note.id === activeId)
-      headingDiv.value = heading
-      contentDiv.innerText = content
-    }
+    makeNoteActive(id)
   })
 }
 
-// new Note
+// add a new note to localStorage, storedNotes and sidebarNotes
+// Also add a event listener (click) which will make it active
 newButton.addEventListener("click", () => {
-  // add to array and local storage
-  // make the note active
-  // localStorage.setItem("notes", notes)
-})
-
-// delete Note
-const deleteButton = document.querySelector(".btn-delete")
-deleteButton.addEventListener("click", () => {
-  // delete from array and local storage
-  // localStorage.setItem("notes", notes)
-  const note = storedNotes.find(note => note.id === activeId)
-  const id = storedNotes[(storedNotes.indexOf(note) + 1) % (storedNotes.length)].id
-  const currNote = document.querySelector(`#${activeId}`)
-  currNote.remove()
-  storedNotes = storedNotes.filter(note => note.id != activeId)
-  const newActiveNote = document.querySelector(`#${id}`)
-  const newActiveHeading = document.querySelector(`#${id} > h3`)
-  newActiveNote.classList.add("sidebar-note-active")
-  newActiveHeading.classList.add("sidebar-note-heading-active")
-  activeId = id
-  const { heading, content } = storedNotes.find(note => note.id === activeId)
-  headingDiv.value = heading
-  contentDiv.innerText = content
+  const newNote = {
+    id: generateId(),
+    heading: "Untitled",
+    content: "", // TODO: add placeholder text 
+  }
+  storedNotes = [...storedNotes, newNote];
+  const newSideNote = createNewSideNote(newNote)
+  sidebar.insertBefore(newSideNote, newButton)
+  newSideNote.addEventListener('click', () => {
+    const { id } = newSideNote
+    makeNoteActive(id)
+  })
+  newSideNote.click()
   localStorage.setItem("notes", JSON.stringify(storedNotes))
 })
 
-//save Note
-// update local storage and storedNotes for titlw and content
+// delete note from localStorage, sidebarNotes and storedNotes
+const deleteButton = document.querySelector("#btn-delete")
+deleteButton.addEventListener("click", () => {
+  const note = storedNotes.find(note => note.id === activeId)
+  const nextId = storedNotes[(storedNotes.indexOf(note) + 1) % (storedNotes.length)].id
+  const currNote = document.querySelector(`#${activeId}`)
+  storedNotes = storedNotes.filter(note => note.id != activeId)
+  makeNoteActive(nextId)
+  currNote.remove()
+  localStorage.setItem("notes", JSON.stringify(storedNotes))
+})
+
+// save changes in current note to localStorage and sidebar note
+const saveButton = document.querySelector("#btn-save")
+saveButton.addEventListener("click", () => {
+  const heading = headingDiv.value;
+  const content = contentDiv.innerText
+  storedNotes = storedNotes.map(note => (
+    note.id === activeId ?
+      ({
+        id: activeId,
+        heading,
+        content,
+      }) : note
+  ))
+  const sideNoteHeading = document.querySelector(`#${activeId} > h3`)
+  const sideNoteContent = document.querySelector(`#${activeId} > p`)
+  sideNoteHeading.innerText = heading
+  sideNoteContent.innerText = shortenContent(content)
+  localStorage.setItem("notes", JSON.stringify(storedNotes))
+})

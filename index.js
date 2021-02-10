@@ -1,7 +1,7 @@
 import { darkTheme, lightTheme } from "./theme.js"
-import { createNewSideNote, generateId, shortenContent } from "./utils.js"
+import { createNewSideNote, generateId, getItem, setItem } from "./utils.js"
 
-let storedNotes = JSON.parse(localStorage.getItem("notes"))
+let storedNotes = getItem("notes")
 let activeId = ""
 
 const toggle = document.querySelector('input[type="checkbox"]')
@@ -9,39 +9,44 @@ const sidebar = document.querySelector(".sidebar")
 const newButton = document.querySelector("#btn-new")
 const headingDiv = document.querySelector("#heading")
 const contentDiv = document.querySelector("#content")
-init()
-const sidebarNotes = document.querySelectorAll(".sidebar-note")
+const sidebarNotes = init()
+
+makeNoteActive(storedNotes[0].id)
 
 // set active class to new note and remove from prev note in sidebar
 function makeNoteActive(id) {
   if (activeId !== id) {
-    {
-      const sidebarNote = document.querySelector(`#${id}`)
-      const sidebarHeading = document.querySelector(`#${id} > h3`)
-      sidebarNote.classList.add("sidebar-note-active")
-      sidebarHeading.classList.add("sidebar-note-heading-active")
-      if (activeId) {
-        const oldNote = document.querySelector(`#${activeId}`)
-        const oldHeading = document.querySelector(`#${activeId} > h3`)
+    const sidebarNote = document.querySelector(`#${id}`)
+    const sidebarHeading = document.querySelector(`#${id} > h3`)
+    sidebarNote.classList.add("sidebar-note-active")
+    sidebarHeading.classList.add("sidebar-note-heading-active")
+    if (activeId) {
+      const oldNote = document.querySelector(`#${activeId}`)
+      const oldHeading = document.querySelector(`#${activeId} > h3`)
+      if (oldNote && oldHeading) {
         oldNote.classList.remove("sidebar-note-active")
         oldHeading.classList.remove("sidebar-note-heading-active")
       }
-      activeId = id
-      const { heading, content } = storedNotes.find(note => note.id === activeId)
+    }
+    activeId = id
+    const activeNote = storedNotes.find(note => note.id === activeId)
+    if (activeNote) {
+      const { heading, content } = activeNote
       headingDiv.value = heading
       contentDiv.innerText = content
     }
   }
 }
 
+
 // initialize sidebar and set first note as active
 function init() {
   const fragment = new DocumentFragment()
-  storedNotes.forEach((note, i) => {
+  storedNotes.forEach((note) => {
     fragment.appendChild(createNewSideNote(note))
   })
   sidebar.insertBefore(fragment, newButton)
-  makeNoteActive(storedNotes[0].id)
+  return document.querySelectorAll(".sidebar-note")
 }
 
 // change theme on toggle 
@@ -77,7 +82,7 @@ newButton.addEventListener("click", () => {
     makeNoteActive(id)
   })
   newSideNote.click()
-  localStorage.setItem("notes", JSON.stringify(storedNotes))
+  setItem("notes", storedNotes)
 })
 
 // delete note from localStorage, sidebarNotes and storedNotes
@@ -87,9 +92,12 @@ deleteButton.addEventListener("click", () => {
   const nextId = storedNotes[(storedNotes.indexOf(note) + 1) % (storedNotes.length)].id
   const currNote = document.querySelector(`#${activeId}`)
   storedNotes = storedNotes.filter(note => note.id != activeId)
+  headingDiv.value = ""
+  contentDiv.innerText = ""
+  activeId = ""
   makeNoteActive(nextId)
   currNote.remove()
-  localStorage.setItem("notes", JSON.stringify(storedNotes))
+  setItem("notes", storedNotes)
 })
 
 // save changes in current note to localStorage and sidebar note
@@ -108,6 +116,6 @@ saveButton.addEventListener("click", () => {
   const sideNoteHeading = document.querySelector(`#${activeId} > h3`)
   const sideNoteContent = document.querySelector(`#${activeId} > p`)
   sideNoteHeading.innerText = heading
-  sideNoteContent.innerText = shortenContent(content)
-  localStorage.setItem("notes", JSON.stringify(storedNotes))
+  sideNoteContent.innerText = content
+  setItem("notes", storedNotes)
 })

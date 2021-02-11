@@ -72,8 +72,9 @@ newButton.addEventListener("click", () => {
   const newNote = {
     id: generateId(),
     heading: "Untitled",
-    content: "", // TODO: add placeholder text 
+    content: "",
   }
+  contentDiv.setAttribute('data-placeholder', "Enter details here")
   storedNotes = [...storedNotes, newNote];
   const newSideNote = createNewSideNote(newNote)
   sidebar.insertBefore(newSideNote, newButton)
@@ -91,17 +92,17 @@ deleteButton.addEventListener("click", () => {
   const note = storedNotes.find(note => note.id === activeId)
   if (note) {
     const nextId = storedNotes[(storedNotes.indexOf(note) + 1) % (storedNotes.length)].id
+    const currNote = document.querySelector(`#${activeId}`)
+    currNote.remove()
+    storedNotes = storedNotes.filter(note => note.id != activeId)
     if (activeId == nextId) {
       headingDiv.value = ""
       contentDiv.innerText = ""
-      activeId = ""
+      contentDiv.setAttribute('data-placeholder', "")
     }
     else {
       makeNoteActive(nextId)
     }
-    const currNote = document.querySelector(`#${activeId}`)
-    storedNotes = storedNotes.filter(note => note.id != activeId)
-    currNote.remove()
     setItem("notes", storedNotes)
   }
 })

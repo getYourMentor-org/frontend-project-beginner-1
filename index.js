@@ -89,15 +89,21 @@ newButton.addEventListener("click", () => {
 const deleteButton = document.querySelector("#btn-delete")
 deleteButton.addEventListener("click", () => {
   const note = storedNotes.find(note => note.id === activeId)
-  const nextId = storedNotes[(storedNotes.indexOf(note) + 1) % (storedNotes.length)].id
-  const currNote = document.querySelector(`#${activeId}`)
-  storedNotes = storedNotes.filter(note => note.id != activeId)
-  headingDiv.value = ""
-  contentDiv.innerText = ""
-  activeId = ""
-  makeNoteActive(nextId)
-  currNote.remove()
-  setItem("notes", storedNotes)
+  if (note) {
+    const nextId = storedNotes[(storedNotes.indexOf(note) + 1) % (storedNotes.length)].id
+    if (activeId == nextId) {
+      headingDiv.value = ""
+      contentDiv.innerText = ""
+      activeId = ""
+    }
+    else {
+      makeNoteActive(nextId)
+    }
+    const currNote = document.querySelector(`#${activeId}`)
+    storedNotes = storedNotes.filter(note => note.id != activeId)
+    currNote.remove()
+    setItem("notes", storedNotes)
+  }
 })
 
 // save changes in current note to localStorage and sidebar note

@@ -213,6 +213,12 @@ input:checked+.slider:before {
   flex: 6
 }
 
+:empty:before {
+  content: attr(data-placeholder);
+  color: var(--secondary-text);
+  font-style: italic;
+}
+
 .note-heading {
   font-family: inherit;
   color: var(--primary-color);

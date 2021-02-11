@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --primary-text: #000;
+  --secondary-text: #666;
+  --primary-bg: #fff;
+  --secondary-bg: #f7f9fa;
+  --tertiary-bg: #e0f3ff;
+  --warning-color: #ff1f13;
+  --warning-dark: #ca1910;
+  --warning-light: #ff4b42;
+  --primary-color: #39a2f2;
+  --dark-color: #1a85d6;
+  --light-color: #6cbaf7;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Merriweather', serif;
+  margin: 0;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 700;
+  border-radius: 25px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn-new {
+  color: white;
+  background: var(--primary-color);
+  border: none;
+  padding: 1rem 1.2rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-new:hover,
+.btn-new:focus {
+  outline: none;
+  background: var(--dark-color);
+}
+
+.btn-new:active {
+  background: var(--light-color);
+}
+
+.btn-delete {
+  color: var(--warning-color);
+  background: var(--primary-bg);
+  padding: 0.8rem 2rem;
+  border: 3px solid var(--warning-color);
+}
+
+.btn-delete:hover,
+.btn-delete:focus {
+  outline: none;
+  background: var(--warning-dark);
+  border: 3px solid var(--warning-dark);
+  color: white;
+}
+
+.btn-delete:active {
+  background: var(--warning-light);
+  border: 3px solid var(--warning-light);
+}
+
+.btn-save {
+  border: 3px solid var(--primary-color);
+  padding: 0.8rem 2rem;
+  color: var(--primary-color);
+  background-color: var(--primary-bg);
+}
+
+.btn-save:hover,
+.btn-save:focus {
+  border: 3px solid var(--dark-color);
+  color: white;
+}
+
+.btn-save:active {
+  border: 3px solid var(--light-color);
+  color: white;
+}
+
+.absolute {
+  position: absolute;
+  top: 0.5rem;
+  right: 0rem;
+  padding-bottom: 1rem;
+}
+
+.marginTop {
+  margin-top: 1rem;
+}
+
+/* Toggle */
+
+input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+label[for="dark"] {
+  display: inline-block;
+  height: 34px;
+  width: 60px;
+  background-color: var(--tertiary-bg);
+  border-radius: 34px;
+  position: relative;
+  flex: 0 0 auto;
+  margin-bottom: 1rem;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background: var(--primary-color);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked+.slider:before {
+  transform: translateX(26px);
+}
+
+/* Sidebar Note */
+
+.sidebar-note {
+  position: relative;
+  padding: 0.5rem;
+  width: 80%;
+  color: var(--secondary-text);
+  cursor: pointer;
+}
+
+.sidebar-note>p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-note-heading {
+  color: var(--primary-text);
+  margin-block-start: 0em;
+  margin-block-end: 0.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-note-active {
+  background-color: var(--tertiary-bg);
+}
+
+.sidebar-note-heading-active {
+  color: var(--primary-color);
+}
+
+/* Divided Screen */
+
+.main {
+  display: flex;
+  align-items: stretch;
+  height: 100vh
+}
+
+.sidebar {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--secondary-bg);
+  flex: 4;
+  overflow: auto;
+}
+
+
+.note {
+  position: relative;
+  background: var(--primary-bg);
+  padding: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 6
+}
+
+:empty:before {
+  content: attr(data-placeholder);
+  color: var(--secondary-text);
+  font-style: italic;
+}
+
+.note-heading {
+  font-family: inherit;
+  color: var(--primary-color);
+  font-size: 2.2rem;
+  font-weight: 700;
+  outline: none;
+  border: none;
+  background: var(--primary-bg);
+  margin: 3rem 2rem 0 2rem;
+  width: inherit;
+}
+
+.note-content {
+  display: flex;
+  margin: 1rem 2rem;
+  color: var(--secondary-text)
+}
+
+.note-content:focus {
+  border: none;
+  outline: none;
+}
+
+
+@media screen and (min-width: 480px) {
+
+  .absolute {
+    right: 1.5rem;
+    top: 1.5rem;
+  }
+
+  .sidebar-note {
+    padding: 1rem;
+  }
+
+}
+
+@media screen and (min-width: 768px) {
+  .btn-new {
+    padding: 1rem 3rem;
+  }
+
+  .btn-save {
+    padding: 0.8rem 2rem;
+  }
+
+  .absolute {
+    right: 2rem;
+    top: 2rem;
+  }
+
+  .sidebar {
+    flex: 3
+  }
+
+  .note {
+    flex: 7
+  }
+}

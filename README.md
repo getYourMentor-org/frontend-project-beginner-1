@@ -1,7 +1,7 @@
 # GetYourMentor Frontend project - Beginner/1
 
 ## DEMO LINK
-<INSERT_DEMO_LINK_HERE>
+https://frontend-project-beginner-1.vercel.app/
 
 ## Target
 

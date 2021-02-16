@@ -120,12 +120,20 @@ li{
 .heading{
     font-weight: 600;
     color: #121;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .content{
     display:none;
 }
 .span{
     hyphens: auto;
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .date{
     position: absolute;

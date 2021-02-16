@@ -14,7 +14,6 @@ let del = document.querySelector('#del')
 let save = document.querySelector('#save')
 
 let heading = '' 
-let content = ''
 let span = ''
 let date = ''
 
@@ -106,11 +105,8 @@ function updateTextDown(e){
 }
 
 function updateTextUp(e){
-    heading.innerText = e.target.value.length > 36 ? 
-    e.target.value.substr(0,35) + '...' : 
-    e.target.value.length === 0 ? 
-    'Untitled':
-    e.target.value
+    heading.innerText =     e.target.value.length === 0 ?  'Untitled': e.target.value
+    notes[curNode.dataset.num].title = e.target.value
 }
 
 function updateEditorDown(e){
@@ -124,13 +120,7 @@ function updateEditorDown(e){
 }
 
 function updateEditorUp(e){
-    if (e.target.innerText.includes('`')) {
-        e.target.innerHTML = e.target.innerHTML.replace('`', "<span style='color:black;'>" + '`' + "</span>");
-    }
-    span.textContent = content.textContent.length > 72 ? 
-    content.textContent.substr(0,71) + '...' : 
-    content.textContent = e.target.innerText
-    content.textContent
+    span.textContent =  e.target.innerText
 }
 
 function saveNote(){
@@ -138,25 +128,15 @@ function saveNote(){
     date.innerText = `last edited ${curTime}`
     const getCurNodeDataset = curNode.dataset.num
     const isIndex = num => num.index == getCurNodeDataset 
-    const indexOfCurNode = notes.findIndex(isIndex)
-    console.log(curNode.children[1].outerHTML)
-    if(indexOfCurNode === -1){
-        notes.push({
-            index: getCurNodeDataset,
-            title:curNode.children[0].textContent,
-            text:curNode.children[1].innerHTML,
-            date: `last edited ${curTime}`
-            })  
-        notes.sort((a,b)=> a.index - b.index)
-    }else{
-        notes[indexOfCurNode] = {
-            index: getCurNodeDataset,
-            title: curNode.children[0].textContent,
-            text: curNode.children[1].innerHTML,
-            date: `last edited ${curTime}`
+    let indexOfCurNode = notes.findIndex(isIndex) 
+    indexOfCurNode === -1 && (indexOfCurNode = notes.length)
+     notes[indexOfCurNode] = {
+        index: getCurNodeDataset,
+        title: textArea.value,
+        text: curNode.children[1].innerHTML,
+        date: `last edited ${curTime}`
         }
-    }
-    console.log(notes)
+    notes.sort((a,b)=> a.index - b.index)
     window.localStorage.setItem('notes', JSON.stringify(notes));
 }
 
@@ -182,7 +162,10 @@ function delNote(){
     if(listWrapper.children.length){
         listWrapper.removeChild(curNode)
     }
-    
+    addNoteClicks--;
+    for(let i=0;i<notes.length;i++){
+        listWrapper.children[i].dataset["num"] = i
+    }
     window.localStorage.setItem('notes', JSON.stringify(notes));
     setActive(nextNode)
     toggleList()
@@ -196,36 +179,35 @@ function addNewNote(){
     } 
     const li = document.createElement('li') 
     const heading = document.createElement('div')
-    const content = document.createElement('div')
     const span = document.createElement('span')
     const date = document.createElement('div')
 
     heading.className = 'heading'
     heading.innerText = 'Untitled'
-    content.className = 'content'
     date.className = 'date'
     date.innerText = 'unsaved'
     li.appendChild(heading)
-    li.appendChild(content)
     li.appendChild(span)
     li.appendChild(date)
 
-    addNoteClicks++;
     li.dataset["num"] =  addNoteClicks;
     listWrapper.appendChild(li)
     textArea.value = ''
     editor.innerText = ''
     curNode && curNode.classList.remove("active")
+    curNode = document.querySelector(`li[data-num="${addNoteClicks}"]`)
+    saveNote()
     setActive(addNoteClicks)
     toggleList()
     document.querySelector('.overflow-auto').scrollTo(0,listWrapper.scrollHeight)
+    addNoteClicks++; 
 }
 
 function active(e){
     curNode.classList.remove("active")
+    const index = e.target.closest("li").dataset.num
     if(curNode !=  e.target){        
-        e.target.closest("li").children[0].innerText  != '' ?
-         (textArea.value = e.target.closest("li").children[0].innerText) : 'Untitled'
+        textArea.value = notes[index].title  
         editor.innerText = e.target.closest("li").children[1].innerText
     }
     const temp = e.target.closest("li").dataset.num
@@ -234,13 +216,12 @@ function active(e){
 }
 
 function setActive(param){
-    curNode = document.querySelector(`li[data-num="${param}"]`)
+    curNode = document.querySelector(`li[data-num="${param}"]`)  
     if(curNode){
     curNode.classList.add('active')
-    content = curNode.children[1]
     heading = curNode.children[0]
-    span = curNode.children[2]
-    date = curNode.children[3]
+    span = curNode.children[1]
+    date = curNode.children[2]
     }
 }
 
@@ -265,16 +246,15 @@ function renderNotes(){
         listWrapper.innerHTML += 
         `
         <li data-num='${i}'>
-            <div class='heading'>${notes[i].title}</div>
-            <div class='content'>${notes[i].text.substr(0,71)}</div>
+            <div class='heading'>${notes[i].title === ''?'Untitled':notes[i].title }</div>
             <span class='span'>${notes[i].text}</span>
             <div class='date'>${notes[i].date}</div>
         </li>
         `
     }
     const firstNode = document.querySelector('li')    
-    textArea.value = firstNode.children[0].innerText
-    editor.innerText =  firstNode.children[1].innerText
+    textArea.value = notes[0].title
+    editor.innerText = notes[0].text 
     document.querySelector('li').classList.add("active")
     addNoteClicks = listWrapper.children.length
 }
@@ -282,7 +262,6 @@ function renderNotes(){
 function setQuerySelectors(){
     curNode = document.querySelector('li')
     heading = document.querySelector('.heading')
-    content = document.querySelector('.content')
     span = document.querySelector('.span')
     date = document.querySelector('.date')
 }

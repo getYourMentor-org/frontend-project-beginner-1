@@ -1,8 +1,7 @@
 # GetYourMentor Frontend project - Beginner/1
 
 ## DEMO LINK
-<INSERT_DEMO_LINK_HERE>
-
+https://notes-app-demo.vercel.app/
 ## Target
 
 Build a note taking app.

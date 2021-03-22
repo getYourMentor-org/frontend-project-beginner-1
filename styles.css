@@ -203,6 +203,10 @@ input:checked+.slider:before {
   overflow: auto;
 }
 
+.sidebar-heading {
+  color: var(--primary-text);
+}
+
 
 .note {
   position: relative;

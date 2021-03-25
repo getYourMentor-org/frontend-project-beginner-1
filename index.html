@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="main">
+    <div class="sidebar">
+      <h2 class="sidebar-heading">NOTES</h2>
+      <label for="dark">
+        <input type="checkbox" name="dark" id="dark" />
+        <span class="slider"></span>
+      </label>
+      <button id="btn-new" class="btn btn-new marginTop">+ New Note</button>
+    </div>
+    <div class="note">
+      <div class="absolute">
+        <button id="btn-save" class="btn btn-new btn-save">Save</button>
+        <button id="btn-delete" class="btn btn-delete">Delete</button>
+      </div>
+      <input type="text" id="heading" class="note-heading" />
+      <div class="note-content" id="content" contenteditable data-placeholder="Enter details here"></div>
+    </div>
+  </div>
+  <script type="module" src="./index.js"></script>
+  <script type="module" src="./theme.js"></script>
+  <script type="module" src="./utils.js"></script>
+</body>
+
+</html>

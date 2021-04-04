@@ -19,7 +19,6 @@ modeEvent.addEventListener("change", mode);
 
 var notes = [];
 
-// functions
 function mode(event) {
     if (event.target.checked) {
         localStorage.setItem("mode", "night");
@@ -27,7 +26,7 @@ function mode(event) {
 
     } else {
         localStorage.setItem("mode", "day");
-        bodyColor.style.backgroundColor = "#EDFBFB";
+        bodyColor.style.backgroundColor = "#FFFFFF";
     }
 
 }
@@ -115,6 +114,7 @@ function defaultNotes() {
     notesBody.value = notes.note;
 
     localStorage.setItem("notes", JSON.stringify(notes));
+    localStorage.setItem("mode", "day");
 
 }
 // load notes from localstorage
@@ -123,8 +123,6 @@ function getNotes() {
     var notes = [];
     var note = [];
     var mode;
-
-    // defaultNotes();
 
     notes = JSON.parse(localStorage.getItem("notes"));
     if (notes == null || notes.length == 0) {
@@ -140,7 +138,7 @@ function getNotes() {
 
     mode = localStorage.getItem("mode");
     if (mode === "day") {
-        bodyColor.style.backgroundColor = "#EDFBFB";
+        bodyColor.style.backgroundColor = "#FFFFFF";
 
     } else {
         bodyColor.style.backgroundColor = "#181d22";
@@ -203,6 +201,7 @@ function removeNotes(notesIndex) {
     notes.splice(notesIndex, 1);
     localStorage.setItem("notes", JSON.stringify(notes));
 
+    loadEmptyNotes();
     location.reload();
 }
 

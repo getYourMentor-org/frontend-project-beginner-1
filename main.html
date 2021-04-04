@@ -4,58 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes | Smalawad</title>
-    <link href="sytles.css" rel="stylesheet" />
+    <title>Noteapp |Smalawad </title>
+    <link rel="stylesheet" href="styles.css">
 
 </head>
 
 <body class="note-body">
-
-    <div class="content">
-
-        <div class="main">
-            <h2> Noteshelf</h2>
-            <!-- <img class="main-img" src="images/add_notes-2.svg" /> -->
-
-            <div>
-                <input class="text-title" type="text" placeholder="Untitiled"></input>
-                <textarea class="text-body" type="text" placeholder="Create Notes"></textarea><br />
-            </div>
-
-            <section calss="btn-flex">
-                <input type="checkbox" id="switch-button">
-                <label for="switch-button">
-                    <i class="day-mode"> day</i>
-                    <i class="night-mode"> night</i>
-                </label>
-                <div class="btn-add add-note">
-
-                    <img src="images/plus.svg" class="add-icon" alt="new notes">
-                    <span>New Note</span>
-
-                </div>
-                <div class="btn-delete delete-note">
-                    <img src="images/delete.svg" class="delete-icon" alt="delete notes">
-                    <span>Delete</span>
-
-                </div>
-                <div class="btn-save save-note">
-                    <img src="images/save.svg" class="save-icon" alt="save notes">
-                    <span>Save</span>
-                </div>
-            </section>
-        </div>
-        <div class="sidebar">
-            <h2> Notes </h2>
-            <img class="note-img" src="images/notes.svg" />
+    <div class="note-container">
+        <section class="note-sidebar">
+            <h2 class="note-sidebar__heading">notes</h2>
+            <img src="images/notes.svg" class="note-img">
 
             <div class="notes-container notes-list">
 
             </div>
-        </div>
-    </div>
 
-    <script src="app.js" charset="utf-8"></script>
+        </section>
+
+        <section class="note-mainbody">
+            <div class="note-main__body">
+                <div class="note-main__elements">
+                    <h2 class="note-main__heading">Noteshelf</h2>
+                    <div class="note-text-container">
+
+                        <input class="text-title" type="text" placeholder="Untitiled"></input>
+                        <textarea class="text-body" type="text" placeholder="Create Notes"></textarea><br />
+
+                    </div>
+                </div>
+
+                <div class="note__btns">
+                    <div class="note__mode">
+                        <input type="checkbox" id="switch-button">
+                        <label for="switch-button">
+                            <i class="day-mode"> day</i>
+                            <i class="night-mode"> night</i>
+                        </label>
+                    </div>
+                    <div class="btn-user">
+                        <div class="btn-add add-note">
+                            <img src="images/plus.svg" class="btn-icon" alt="new notes">
+                            <span class="btn-text">New Note</span>
+
+                        </div>
+                        <div class="btn-save save-note">
+                            <img src="images/save.svg" class="btn-icon" alt="save notes">
+                            <span class="btn-text">Save</span>
+                        </div>
+                        <div class="btn-delete delete-note">
+                            <img src="images/delete.svg" class="btn-icon" alt="delete notes">
+                            <span class="btn-text">Delete</span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <script src="app.js" charset="UTF-8"></script>
+    </div>
 </body>
 
 </html>
